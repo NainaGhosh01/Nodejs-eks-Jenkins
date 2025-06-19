@@ -8,6 +8,12 @@ pipeline {
   }
 
   stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/NainaGhosh01/Nodejs-eks-Jenkins.git'
+      }
+    }
+
     stage('Install & Test') {
       steps {
         sh 'npm install'
@@ -47,6 +53,19 @@ pipeline {
           kubectl apply -f k8s.yaml
         '''
       }
+    }
+  }
+
+  post {
+    success {
+      mail to: 'you@gmail.com',
+           subject: "✅ SUCCESS: Node.js app deployed to EKS",
+           body: "Good news! The Node.js app has been successfully deployed to EKS. \n\n - Jenkins"
+    }
+    failure {
+      mail to: 'you@gmail.com',
+           subject: "❌ FAILURE: Deployment failed",
+           body: "Something went wrong in the Jenkins pipeline for Node.js app deployment to EKS. \n\nPlease check Jenkins logs. \n\n - Jenkins"
     }
   }
 }
