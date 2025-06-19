@@ -11,8 +11,11 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}`);
-});
+// Only start the server if the file is run directly (not during testing)
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`App running on port ${port}`);
+  });
+}
 
-module.exports = app; // Export for testing
+module.exports = app; // Export the app for testing
