@@ -8,12 +8,6 @@ pipeline {
   }
 
   stages {
-    stage('Checkout') {
-      steps {
-        git 'https://github.com/NainaGhosh01/Nodejs-eks-Jenkins.git'
-      }
-    }
-
     stage('Install & Test') {
       steps {
         sh 'npm install'
